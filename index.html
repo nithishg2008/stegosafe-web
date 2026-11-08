@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f3ec">
+    <meta name="description" content="Hide and recover encrypted messages in images. Processing stays in your browser.">
+    <title>StegoSafe | Private by design</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="StegoSafe home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>stegosafe<span class="brand-period">.</span></span>
+        </a>
+        <div class="privacy-status"><span class="status-dot"></span> ON-DEVICE ONLY</div>
+      </header>
+
+      <main id="home">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <p class="eyebrow">A quieter way to send a secret</p>
+            <h1 id="page-title">Keep your message<br><em>in plain sight.</em></h1>
+            <p class="intro-text">Encrypt a note, tuck it into an image, and share the PNG. The picture looks the same. The secret stays yours.</p>
+            <div class="trust-line"><span class="trust-icon" aria-hidden="true">↗</span><span>No uploads. No accounts. Your files stay in this browser.</span></div>
+          </div>
+          <div class="artwork" aria-hidden="true">
+            <div class="art-label">IMAGE / 01</div>
+            <div class="art-sun"></div>
+            <div class="art-ridge ridge-back"></div>
+            <div class="art-ridge ridge-front"></div>
+            <div class="art-grid"></div>
+            <div class="art-note"><span>PRIVATE<br>BY DESIGN</span><b>SS—01</b></div>
+          </div>
+        </section>
+
+        <section class="workbench" aria-label="StegoSafe message tools">
+          <div class="workbench-head">
+            <div>
+              <p class="eyebrow">YOUR WORKSPACE</p>
+              <h2>What would you like to do?</h2>
+            </div>
+            <div class="mode-switch" role="tablist" aria-label="Message action">
+              <button class="mode-button active" id="hide-tab" type="button" role="tab" aria-selected="true" aria-controls="hide-panel">Hide</button>
+              <button class="mode-button" id="extract-tab" type="button" role="tab" aria-selected="false" aria-controls="extract-panel">Extract</button>
+            </div>
+          </div>
+
+          <div class="mode-panel" id="hide-panel" role="tabpanel" aria-labelledby="hide-tab">
+            <div class="panel-grid">
+              <div class="form-column">
+                <div class="step-heading"><span>01</span><div><h3>Choose a carrier image</h3><p>Use a PNG, JPEG, or WebP. Your result downloads as PNG.</p></div></div>
+                <label class="drop-zone" id="hide-drop" for="hide-file">
+                  <input id="hide-file" type="file" accept="image/png,image/jpeg,image/webp">
+                  <span class="drop-symbol" aria-hidden="true">＋</span>
+                  <span class="drop-title" id="hide-file-label">Drop an image here or <u>browse files</u></span>
+                  <span class="drop-meta" id="hide-image-meta">PNG, JPG, WEBP · up to 40 megapixels</span>
+                </label>
+                <div class="capacity-row" id="hide-capacity" hidden>
+                  <span>Available message space</span><strong id="capacity-value">—</strong>
+                </div>
+
+                <div class="step-heading second-step"><span>02</span><div><h3>Write your message</h3><p>Text is encrypted before it is embedded.</p></div></div>
+                <label class="field-label" for="secret-message">Secret message</label>
+                <textarea id="secret-message" rows="4" maxlength="12000" placeholder="Write something only they should read…"></textarea>
+                <div class="field-foot"><span>A short message leaves more room for the image.</span><span id="message-size">0 B</span></div>
+
+                <div class="credentials-grid">
+                  <div><label class="field-label" for="hide-password">Password</label><input id="hide-password" type="password" autocomplete="new-password" placeholder="At least 6 characters"></div>
+                  <div><label class="field-label" for="confirm-password">Confirm password</label><input id="confirm-password" type="password" autocomplete="new-password" placeholder="Type it again"></div>
+                </div>
+                <button class="primary-button" id="hide-button" type="button" disabled><span>Encrypt &amp; create PNG</span><span aria-hidden="true">↗</span></button>
+              </div>
+
+              <aside class="preview-column" aria-label="Image preview">
+                <div class="preview-frame" id="hide-preview-frame">
+                  <div class="preview-empty"><span class="preview-cross" aria-hidden="true">✳</span><span>Your image<br>will appear here</span></div>
+                  <img id="hide-preview" alt="Selected carrier image preview" hidden>
+                </div>
+                <div class="preview-caption"><span>LOSSLESS EXPORT</span><span>PNG / RGB LSB</span></div>
+                <div class="security-note"><span class="security-mark" aria-hidden="true">✳</span><div><strong>Encrypted before it disappears</strong><p>AES-256-GCM protects your message. A wrong password or altered image is detected.</p></div></div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="mode-panel" id="extract-panel" role="tabpanel" aria-labelledby="extract-tab" hidden>
+            <div class="panel-grid extract-grid">
+              <div class="form-column">
+                <div class="step-heading"><span>01</span><div><h3>Choose a StegoSafe image</h3><p>Select the original PNG created by StegoSafe.</p></div></div>
+                <label class="drop-zone" id="extract-drop" for="extract-file">
+                  <input id="extract-file" type="file" accept="image/png,image/jpeg,image/webp">
+                  <span class="drop-symbol" aria-hidden="true">＋</span>
+                  <span class="drop-title" id="extract-file-label">Drop an image here or <u>browse files</u></span>
+                  <span class="drop-meta" id="extract-image-meta">PNG recommended · up to 40 megapixels</span>
+                </label>
+                <div class="step-heading second-step"><span>02</span><div><h3>Unlock the message</h3><p>The message is only shown after verification.</p></div></div>
+                <label class="field-label" for="extract-password">Password</label>
+                <input id="extract-password" type="password" autocomplete="current-password" placeholder="Enter the password">
+                <button class="primary-button extract-button" id="extract-button" type="button" disabled><span>Scan &amp; decrypt</span><span aria-hidden="true">↗</span></button>
+                <div class="result-box" id="result-box" hidden>
+                  <div class="result-head"><span>MESSAGE RECOVERED</span><button class="copy-button" id="copy-button" type="button" title="Copy message" aria-label="Copy message">Copy</button></div>
+                  <p id="extracted-message"></p>
+                </div>
+              </div>
+              <aside class="preview-column" aria-label="Image preview">
+                <div class="preview-frame" id="extract-preview-frame">
+                  <div class="preview-empty"><span class="preview-cross" aria-hidden="true">✳</span><span>Your image<br>will appear here</span></div>
+                  <img id="extract-preview" alt="Selected image to extract from" hidden>
+                </div>
+                <div class="preview-caption"><span>LOCAL SCAN</span><span>RGB / LSB</span></div>
+                <div class="security-note"><span class="security-mark" aria-hidden="true">✳</span><div><strong>Nothing leaves your device</strong><p>Image scanning, key derivation, and decryption happen locally in your browser.</p></div></div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="status-message" id="status-message" role="status" aria-live="polite" hidden></div>
+        </section>
+      </main>
+
+      <footer><span>STEGOSAFE <span class="footer-dot">●</span> PRIVATE BY DESIGN</span><span>PBKDF2 · AES-GCM · LOSSLESS PNG</span></footer>
+    </div>
+  </body>
+</html>
